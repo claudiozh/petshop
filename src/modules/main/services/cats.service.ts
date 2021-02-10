@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCatDto } from '../dtos/create-cat.dto';
@@ -23,7 +23,26 @@ export class CatsService {
         return this.repository.find();
     }
 
+    async findByBreed(breed: string): Promise<Cat[]> {
+        const cats = this.repository.find({
+            where: { breed}
+        });
+
+        return cats;
+    }
+
     async create(cat: CreateCatDto): Promise<Cat> {
+        const catExist = await this.repository.findOne({
+            where: { name: String(cat.name) }
+        });
+
+        if (catExist) {
+            throw new HttpException({
+                status: HttpStatus.BAD_REQUEST,
+                error: 'Já existe cat com esse nome',
+            }, HttpStatus.BAD_REQUEST);
+        }
+
         return this.repository.save(cat);
     }
 

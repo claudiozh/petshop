@@ -1,11 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
-import { CreateCatDto } from "src/modules/cats/dtos/create-cat.dto";
+import { CreateCatDto } from "../dtos/create-cat.dto";
 import { ResponseDto } from "../dtos/response.dto";
 import { UpdateCatDto } from "../dtos/update-cat.dto";
-import { ResultResponse } from "../interfaces/response.interface";
 import { CatsService } from "../services/cats.service";
 
-@Controller('cats')
+@Controller('cats/')
 export class CatsController {
     constructor(
         private readonly catsService: CatsService
@@ -29,6 +28,17 @@ export class CatsController {
         return new ResponseDto({
             success: true,
             message: 'Lista de cats!',
+            data: cats
+        });
+    }
+
+    @Get('por-raca')
+    async findByBreed(@Query('breed') breed: string) {
+        const cats = await this.catsService.findByBreed(breed);
+
+        return new ResponseDto({
+            success: true,
+            message: `Cats da raça (${breed})`,
             data: cats
         });
     }

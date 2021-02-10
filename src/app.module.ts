@@ -1,8 +1,7 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { CatsModule } from './modules/cats/cats.module';
-import { logger } from './middleware/logger.middleware';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
+import { MainModule } from './modules/main/main.module';
 
 @Module({
 	imports: [
@@ -22,7 +21,7 @@ import { Connection } from 'typeorm';
 		// 	},
 		// }),
 		TypeOrmModule.forRoot(),
-		CatsModule
+		MainModule
 	]
 })
 

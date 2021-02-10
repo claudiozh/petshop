@@ -1,15 +1,13 @@
 import { IsNotEmpty, IsNumber, Validate } from "class-validator";
-import { Unique } from "typeorm";
-import { Cat } from "../entities/cat.entity";
 
 export class CreateCatDto {
-    @Validate(Unique, [Cat, 'name'])
-    @IsNotEmpty()
+
+    @IsNotEmpty({ message: 'O Campo nome é obrigatório' })
     name: string;
 
     @IsNumber()
     age: number;
 
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'O Campo raça é obrigatório' })
     breed: string;
 }

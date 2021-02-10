@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user.entity";
 
 @Entity()
 export class Cat {
@@ -6,7 +7,6 @@ export class Cat {
     id: number;
 
     @Column({ unique: true, length: 60 })
-    @Unique('Duplicate name', ['name'])
     name: string;
 
     @Column()
@@ -14,4 +14,7 @@ export class Cat {
 
     @Column({ length: 60 })
     breed: string
+
+    @ManyToOne(() => User, (user) => user.cats)
+    user: User
 }
