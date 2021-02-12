@@ -1,10 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { CreateCatDto } from "../dtos/create-cat.dto";
 import { ResponseDto } from "../dtos/response.dto";
 import { UpdateCatDto } from "../dtos/update-cat.dto";
 import { CatsService } from "../services/cats.service";
 
-@Controller('cats/')
+@Controller('cats')
+@ApiTags('cats')
 export class CatsController {
     constructor(
         private readonly catsService: CatsService

@@ -10,6 +10,9 @@ export class User {
     @Column({ unique: true, length: 60 })
     name: string;
 
+    @Column({ unique: true })
+    username: string;
+
     @Column()
     age: number;
 
